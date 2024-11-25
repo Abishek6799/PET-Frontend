@@ -19,13 +19,9 @@ const MessagesList = ({ petId, userId }) => {
     }
     try {
       const response = await api.get(`/message/pet/${petId}`);
-      const sortedMessages = response.data.messages?.sort(
-        (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
-    ); 
-      setMessages(sortedMessages || []);
+      setMessages(response.data.messages);
       setError(null);
     } catch (error) {
-      setMessages([]);
       setError("No messages found");
     }
   };
@@ -67,9 +63,9 @@ const MessagesList = ({ petId, userId }) => {
           {
             sender: { name: "You" },
             content: messageContent,
-            timestamp: new Date().toISOString(),
+            timestamp: new Date(),
           },
-        ].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)));
+        ]);
         setMessageContent("");
       } else {
         throw new Error("Failed to send message");
