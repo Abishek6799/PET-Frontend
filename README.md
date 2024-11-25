@@ -1,8 +1,36 @@
-# React + Vite
+ ## Features
+ ## Pet Listings
+Shelters can create and manage detailed pet profiles, including:
+    Name, age, breed, size, color, and medical history.
+    Upload photos pets.
+    Users can search for pets using advanced filters (breed, age, size, location).
+## Application Management
+Submit adoption applications directly through the platform.
+Track application status and communicate with shelters.
+Shelters can review applications, request additional information, and schedule meet-and-greets.
+## User Reviews
+Leave reviews and ratings for shelters and pets.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Connecting Adopters with Shelters
+Tools to contact shelters and foster organizations directly.
+Messaging system for communication between adopters and shelters.
+Schedule appointments or visits to meet pets.
+## Fostering Pets
+Register as a foster parent and manage fostered pet profiles.
+Track the status of fostered pets and update progress.
+Coordinate with shelters on fostering activities.
+## Search and Filtering
+Advanced filters for sorting pets based on relevance, location, and user preferences.
+## User Features
+Secure user registration and login.
+Manage profiles, track applications, and interact with shelters.
+Notifications for updates on applications and new pet listings.
+## Tech Stack
+#Frontend
+React.js: Dynamic and responsive user interface.
+TailwindCSS: Modern and flexible styling.
+#Backend
+Node.js
+Express.js
+MongoDB
+SendGrid/Nodemailer
