@@ -5,11 +5,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import './MessageFromFoster.css';
 import { IoMdCloseCircle } from "react-icons/io";
 
-const MessageFromFoster = ({ petId, shelterId, fosterId, onClose }) => {
+const MessageFromFoster = ({ petId, shelterId,  onClose }) => {
     const [message, setMessage] = useState('');
     const [messageContent, setMessageContent] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const fosterId = localStorage.getItem('fosterId');
 
    
     const fetchMessages = async () => {
@@ -92,33 +93,32 @@ const MessageFromFoster = ({ petId, shelterId, fosterId, onClose }) => {
 
                 
                 <div className="messages overflow-y-auto max-h-60 mb-4">
-                    {error ? (
-                        <p className="text-red-500">{error}</p>
-                    ) : messageContent.length === 0 ? (
-                        <p className="text-gray-500">No messages yet. Start the conversation!</p>
-                    ) : (
-                        messageContent.map((msg, index) => (
-                            <div
-                                key={index}
-                                className={`message bubble ${
-                                    msg.sender?.name === 'You'
-                                        ? 'bg-blue-100 text-right'
-                                        : 'bg-gray-100 text-left'
-                                } p-2 mb-2 rounded-lg`}
-                            >
-                                <p>
-                                    <strong>
-                                        {msg.sender?.name === 'You' ? 'You' : msg.sender?.name || 'Shelter'}:
-                                    </strong>{' '}
-                                    {msg.content}
-                                </p>
-                                <span className="text-xs text-gray-500">
-                                    {new Date(msg.timestamp).toLocaleString()}
-                                </span>
-                            </div>
-                        ))
-                    )}
-                </div>
+    {error ? (
+        <p className="text-red-500">{error}</p>
+    ) : messageContent.length === 0 ? (
+        <p className="text-gray-500">No messages yet. Start the conversation!</p>
+    ) : (
+        messageContent.map((msg, index) => (
+            <div
+                key={index}
+                className={`message bubble ${
+                    msg.sender.id === fosterId ? 'bg-blue-100 text-right self-end' : 'bg-gray-100 text-left self-start'
+                } p-2 mb-2 rounded-lg`}
+            >
+                <p>
+                    <strong>
+                        {msg.sender.id === fosterId ? 'You' : msg.sender.name}:
+                    </strong>{' '}
+                    {msg.content}
+                </p>
+                <span className="text-xs text-gray-500">
+                    {new Date(msg.timestamp).toLocaleString()}
+                </span>
+            </div>
+        ))
+    )}
+</div>
+
 
                
                 <div className="flex items-center">

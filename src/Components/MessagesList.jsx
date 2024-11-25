@@ -10,7 +10,7 @@ const MessagesList = ({ petId, userId }) => {
   const [error, setError] = useState(null);
   const [showAllMessages, setShowAllMessages] = useState(false);
   const [isMessageBoxOpen, setIsMessageBoxOpen] = useState(false);
-  const shelterId = localStorage.getItem("shelterId"); 
+  const shelterId = localStorage.getItem("shelterId");
 
   const fetchMessages = async () => {
     if (!petId) {
@@ -19,10 +19,14 @@ const MessagesList = ({ petId, userId }) => {
     }
     try {
       const response = await api.get(`/message/pet/${petId}`);
-      setMessages(response.data.messages);
+      const sortedMessages = response.data.messages?.sort(
+        (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+      );
+      setMessages(sortedMessages || []);
       setError(null);
     } catch (error) {
       setError("No messages found");
+      setMessages([]);
     }
   };
 
@@ -53,17 +57,17 @@ const MessagesList = ({ petId, userId }) => {
         content: messageContent,
         receiverId: userId,
         receiverType: "User",
-        senderId:shelterId,
-        senderType:"Shelter",
+        senderId: shelterId,
+        senderType: "Shelter",
       });
 
-      if (messageResponse.status === 200) {
+      if (messageResponse.status === 200 || messageResponse.status === 201) {
         setMessages((prevMessages) => [
           ...prevMessages,
           {
-            sender: { name: "You" },
+            sender: { id: shelterId, name: "You" },
             content: messageContent,
-            timestamp: new Date(),
+            timestamp: new Date().toISOString(),
           },
         ]);
         setMessageContent("");
@@ -85,7 +89,6 @@ const MessagesList = ({ petId, userId }) => {
 
   return (
     <div>
-     
       <button
         onClick={() => setIsMessageBoxOpen((prev) => !prev)}
         className="px-4 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
@@ -93,69 +96,58 @@ const MessagesList = ({ petId, userId }) => {
         {isMessageBoxOpen ? "Close Messages" : "Message"}
       </button>
 
-    
       {isMessageBoxOpen && (
-        <div className="flex flex-col bg-gradient-to-br from-white to-gray-100 rounded-lg shadow-lg p-6 mx-10 space-y-4 mt-4">
-          <h3 className="text-2xl font-bold text-gray-800">Chat</h3>
+        <div className="mt-4 p-6 rounded-md shadow-lg bg-white">
+          <h3 className="text-xl font-bold">Messages</h3>
           {error && <p className="text-red-500">{error}</p>}
+
           {messages.length === 0 && !error && (
-            <p className="text-gray-600 text-center">No messages yet. Start the conversation!</p>
+            <p>No messages yet. Start a conversation!</p>
           )}
 
-         
-          <div className="flex flex-col-reverse space-y-4 space-y-reverse overflow-y-auto max-h-80 px-4 py-2 border rounded-md bg-white shadow-sm">
+          <div className="messages-container max-h-80 overflow-y-auto border p-2 rounded-md shadow-md mt-4">
             {displayedMessages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${
-                  message.sender?.name === "You" ? "justify-end" : "justify-start"
+                className={`p-2 my-2 rounded-lg shadow-md ${
+                  message.sender?.id === shelterId
+                    ? "bg-green-200 text-right"
+                    : "bg-gray-200 text-left"
                 }`}
               >
-                <div
-                  className={`max-w-[80%] p-3 rounded-lg shadow-md ${
-                    message.sender?.name === "You"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-800"
-                  }`}
-                >
-                  <p className="text-sm font-semibold">
-                    {message.sender?.name === "You" ? "You" : message.sender?.name || "Shelter"}
-                  </p>
-                  <p>{message.content}</p>
-                  <span className="block text-xs mt-2 text-gray-400">
-                    {new Date(message.timestamp).toLocaleString()}
-                  </span>
-                </div>
+                <strong className="text-sm font-semibold">
+                  {message.sender?.name === "You" ? "You" : message.sender?.name || "Shelter"}
+                </strong>
+                <p>{message.content}</p>
+                <p className="text-sm text-gray-500">
+                  {new Date(message.timestamp).toLocaleString()}
+                </p>
               </div>
             ))}
           </div>
 
-        
           {messages.length > 3 && (
             <button
               onClick={handleToggleAllMessages}
-              className="self-center px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-full text-sm font-semibold text-gray-600 transition"
+              className="mt-2 px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-full text-sm"
             >
-              {showAllMessages ? "Hide Older Messages" : "Show All Messages"}
+              {showAllMessages ? "Hide Older Messages" : "Load All Messages"}
             </button>
           )}
 
-         
-          <div className="flex items-center space-x-4">
+          <div className="mt-4">
             <textarea
               value={messageContent}
               onChange={(e) => setMessageContent(e.target.value)}
               rows="3"
               placeholder="Type your message..."
-              className="flex-1 resize-none p-2 text-lg border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               onClick={handleSendMessage}
               disabled={loading}
-              className={`px-6 py-3 rounded-lg ${
-                loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-500 text-white hover:bg-blue-600"
+              className={`mt-2 px-4 py-2 rounded ${
+                loading ? "bg-gray-400" : "bg-blue-500 text-white"
               }`}
             >
               {loading ? "Sending..." : "Send"}

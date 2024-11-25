@@ -101,17 +101,19 @@ const MessageFromShelter = ({ petId, fosterId }) => {
 
       <div className="mt-4">
         <div className="messages-container max-h-80 overflow-y-auto border p-2 rounded-md shadow-md">
-          {displayedMessages.map((message) => (
+          {displayedMessages.map((message, index) => (
             <div
-              key={message._id}
-              className={`p-2 my-2 rounded-lg shadow-md ${ message.sender?.name ||
-                message.sender === 'You' ? 'bg-green-200 text-right' : 'bg-gray-200 text-left'
+              key={index}
+              className={`p-2 my-2 rounded-lg shadow-md ${ 
+                message.sender.id === shelterId ? 'bg-green-200 text-right' : 'bg-gray-200 text-left'
               }`}
             >
-              <p>
-               
-                {message.content}
-              </p>
+              
+              <strong className="text-sm font-semibold">
+                {message.sender.id === shelterId ? 'You' : message.sender.name}
+            </strong>
+                <p>{message.content}</p>
+              
               <p className="text-sm text-gray-500">
                 {new Date(message.timestamp).toLocaleString()}
               </p>
