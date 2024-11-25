@@ -20,10 +20,14 @@ const MessageForm = ({ petId, shelterId, onClose }) => {
 
         try {
             const response = await api.get(`/message/pet/${petId}`);
-           
-            setMessageContent(response.data.messages);
+            const sortedMessages = response.data.messages?.sort(
+                (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+            ); 
+            setMessageContent(sortedMessages || []);
             setError(null);
         } catch (err) {
+            setMessageContent([]);
+            setError('Failed to load messages');
             console.log('Error fetching messages:', err);
         }
     };
@@ -52,25 +56,25 @@ const MessageForm = ({ petId, shelterId, onClose }) => {
 
         try {
             const response = await api.post(`/message/create/${petId}`, {
-               
-                content: message,
+               petId,
+                content: message.trim(),
                 receiverId: shelterId,
                 receiverType: 'Shelter',
                 senderId: userId,
                 senderType: 'User',
             });
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
             
                 setMessageContent((prevMessages) => [
                     ...prevMessages,
                     {
                         sender: 'You',
                       
-                        content: message,
+                        content: message.trim(),
                         timestamp: new Date().toISOString(),
                     },
-                ]);
+                ].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)));
                 setMessage('');
             } else {
                 throw new Error('Failed to send message');
@@ -105,9 +109,9 @@ const MessageForm = ({ petId, shelterId, onClose }) => {
                                 msg.sender?.name === 'You' ? 'bg-blue-100 text-right' : 'bg-gray-100 text-left'
                             }`}
                         >
-                            <p className="text-sm font-semibold">
+                            <strong className="text-sm font-semibold">
                     {message.sender?.name === "You" ? "You" : message.sender?.name || "Shelter"}
-                  </p>
+                  </strong>
                             <p>{msg.content}</p>
                             <span className="text-xs text-gray-500">
                                 {new Date(msg.timestamp).toLocaleString()}

@@ -19,9 +19,13 @@ const MessageFromShelter = ({ petId, fosterId }) => {
 
     try {
       const response = await api.get(`/message/pet/${petId}`);
-      setMessages(response.data.messages);
+      const sortedMessages = response.data.messages?.sort(
+        (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+    ); 
+      setMessages(sortedMessages || []);
       setError(null);
     } catch (error) {
+      setMessages([]);
       setError("No messages found");
     }
   };
@@ -57,16 +61,16 @@ const MessageFromShelter = ({ petId, fosterId }) => {
         senderType:"Shelter" 
       });
 
-      if (messageResponse.status === 200) {
+      if (messageResponse.status === 200 || messageResponse.status === 201) {
      
         setMessages((prevMessages) => [
           ...prevMessages,
           {
             sender:  'You' , 
             content: messageContent,
-            timestamp: new Date(),
+            timestamp: new Date().toISOString(),
           },
-        ]);
+        ].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)));
         setMessageContent(''); 
       } else {
         throw new Error("Failed to send message");
