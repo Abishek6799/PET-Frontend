@@ -180,6 +180,7 @@ const CreatePetProfile = () => {
                 type="file"
                 id="image"
                 name="image"
+                accept="image/*"
                 className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                 onChange={(e) => setImage(e.target.files[0])}
               />
