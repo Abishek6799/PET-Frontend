@@ -104,7 +104,7 @@ const MessageForm = ({ petId, shelterId, onClose }) => {
     )}
     {messageContent.map((msg, index) => (
         <div
-            key={index} // Use a unique key if `_id` is not available
+            key={index} 
             className={`message bubble ${
                 msg.sender.id === userId ? 'bg-blue-100 text-right self-end' : 'bg-gray-100 text-left self-start'
             }`}
