@@ -1,0 +1,28 @@
+.message.bubble {
+    padding: 10px;
+    border-radius: 15px;
+    margin: 5px 0;
+    max-width: 70%;
+  }
+  
+  .message.you {
+    background-color: #e1f5fe;
+    margin-left: auto;
+  }
+  
+  .message.shelter {
+    background-color: #f1f0f0;
+    margin-right: auto;
+  }
+  
+  .messages {
+    margin-bottom: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  textarea:focus {
+    outline: none;
+    border-color: #1D4ED8; 
+  }
+  

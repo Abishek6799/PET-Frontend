@@ -1,0 +1,152 @@
+
+.MessageForm .fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+
+.MessageForm .bg-white {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+
+
+.MessageForm button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.MessageForm button:hover {
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+
+.MessageForm .text-gray-500 {
+    color: #6B7280;
+}
+
+.MessageForm .text-red-500 {
+    color: #EF4444;
+}
+
+.MessageForm .text-2xl {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+
+.MessageForm .messages {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 16px;
+}
+
+
+.MessageForm .message {
+    background-color: #f0f4f8;
+    padding: 12px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    position: relative;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.MessageForm .message.bg-blue-100 {
+    background-color: #d0e7ff;
+    margin-left: auto;
+    text-align: right;
+}
+
+.MessageForm .message.bg-gray-100 {
+    background-color: #f3f3f3;
+    margin-right: auto;
+    text-align: left;
+}
+
+
+.MessageForm .text-xs {
+    font-size: 12px;
+    color: #a0aec0;
+    margin-top: 4px;
+    display: block;
+}
+
+
+.MessageForm textarea {
+    width: calc(100% - 80px);
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: #f9fafb;
+    font-size: 14px;
+    resize: none;
+    transition: border-color 0.3s ease;
+}
+
+.MessageForm textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+
+.MessageForm .ml-2 {
+    margin-left: 12px;
+}
+
+.MessageForm .bg-blue-500 {
+    background-color: #3b82f6;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.MessageForm .bg-gray-400 {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+}
+
+
+@media (max-width: 640px) {
+    .MessageForm .bg-white {
+        padding: 16px;
+        max-width: 100%;
+    }
+
+    .MessageForm .message {
+        padding: 8px 12px;
+    }
+
+    .MessageForm .text-2xl {
+        font-size: 20px;
+    }
+
+    .MessageForm textarea {
+        width: calc(100% - 60px);
+    }
+}
