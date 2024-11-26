@@ -41,6 +41,7 @@ const Navbar = () => {
             >
               Home
             </Link>
+
                 <Link
                   to={`/pet-request/${shelterId}`}
                   className="text-lg font-medium text-white hover:text-gray-200 transition"
@@ -59,6 +60,9 @@ const Navbar = () => {
                 >
                   Shelter
                 </Link>
+                <Link to="/favorites" className="text-lg font-medium text-white hover:text-gray-200 transition">
+              Favorites
+            </Link>
               </>
             )}
 
@@ -69,6 +73,9 @@ const Navbar = () => {
               className="text-lg font-medium text-white hover:text-gray-200 transition"
             >
               Home
+            </Link>
+            <Link to="/favorites" className="text-lg font-medium text-white hover:text-gray-200 transition">
+              Favorites
             </Link>
               
                 <Link
@@ -87,6 +94,9 @@ const Navbar = () => {
               className="text-lg font-medium text-white hover:text-gray-200 transition"
             >
               Home
+            </Link>
+            <Link to="/favorites" className="text-lg font-medium text-white hover:text-gray-200 transition">
+              Favorites
             </Link>
                 <Link
                   to="/user-profile"

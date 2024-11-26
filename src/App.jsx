@@ -1,5 +1,3 @@
-/* This code snippet is a React component named `App` that serves as the main entry point of a React
-application. Here's a breakdown of what the code is doing: */
 import React,{ useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Register from './Pages/Register';
@@ -31,6 +29,7 @@ import AppointmentList from './Components/AppointmentList';
 import FosterDetails from './Pages/FosterDetails';
 import CreateFosterPet from './Pages/CreateFosterPet';
 import EditPet from './Components/EditPet';
+import Favorites from './Pages/Favorites';
 import Footer from './Components/Footer';
 
 const App = () => {
@@ -46,6 +45,7 @@ const App = () => {
       <Navbar/>
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login  setToken={setToken}/>} />
         <Route path="/" element={<Welcome/>}/>

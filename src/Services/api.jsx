@@ -1,5 +1,4 @@
-/* This code snippet is creating an instance of Axios called `api` with specific configurations. Here's
-a breakdown of what it does: */
+
 import axios from "axios";
 
 const api = axios.create({
