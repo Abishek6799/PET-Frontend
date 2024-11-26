@@ -10,7 +10,7 @@ Track application status and communicate with shelters.
 Shelters can review applications, request additional information, and schedule meet-and-greets.
 ## User Reviews
 Leave reviews and ratings for shelters and pets.
-
+User can add there favorite pets
 ## Connecting Adopters with Shelters
 Tools to contact shelters and foster organizations directly.
 Messaging system for communication between adopters and shelters.
